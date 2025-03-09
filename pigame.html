@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Serpent</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #001f3f, #003366);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .game-area {
+            width: 60%;
+            padding: 20px;
+            background: #003366;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .records-area {
+            width: 35%;
+            padding: 20px;
+            background: #001f3f;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .game-buttons, .control-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button, select, input {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        button:hover, select:hover, input:hover {
+            background: #218838;
+        }
+
+        .records-table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        .records-table th, .records-table td {
+            padding: 10px;
+            border: 2px solid white;
+        }
+
+        .records-table th {
+            background-color: #007bff;
+        }
+
+        .records-table td {
+            background-color: #00274d;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: white;
+            font-size: 16px;
+            font-style: italic;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #scoreCount {
+            font-size: 28px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background-color: #003366;
+            border: 5px solid #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .control-buttons .control-btn {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .control-buttons .control-btn:hover {
+            background: #0056b3;
+        }
+
+        .top-scores {
+            font-size: 30px;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pi Serpent</h1>
+
+    <div class="container">
+        <!-- Records Section -->
+        <div class="records-area">
+            <div class="top-scores">Top Scores</div>
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTable">
+                    <tr><td>1</td><td>0</td></tr>
+                    <tr><td>2</td><td>0</td></tr>
+                    <tr><td>3</td><td>0</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Game Section -->
+        <div class="game-area">
+            <div class="game-buttons">
+                <p id="score">Score:</p>
+                <p id="scoreCount">0</p>
+            </div>
+
+            <canvas id="gameCanvas" width="600" height="400"></canvas>
+
+            <div class="game-buttons">
+                <button id="restartButton" onclick="restartGame()">Restart</button>
+                <select id="difficulty" onchange="changeDifficulty()">
+                    <option value="200">Easy</option>
+                    <option value="150" selected>Normal</option>
+                    <option value="100">Hard</option>
+                </select>
+            </div>
+
+            <div class="control-buttons">
+                <button class="control-btn" onclick="moveUp()">⬆</button>
+                <button class="control-btn" onclick="moveLeft()">⬅</button>
+                <button class="control-btn" onclick="moveRight()">➡</button>
+                <button class="control-btn" onclick="moveDown()">⬇</button>
+            </div>
+
+            <input type="color" id="colorPicker" onchange="changeSnakeColor(event)" style="margin-top: 20px;">
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Created by: Jostyn Jesus Ramos Enriquez, Davin Ivan Ramirez Robles, Guillermo Axel Mohedano Peña</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('scoreCount');
+        const colorPicker = document.getElementById('colorPicker');
+        const recordsTable = document.getElementById('recordsTable');
+        const cellSize = 40;
+        let piDigits = "3." + "14159265358979323846264338327950288419716939937510".repeat(100);
+        let snake = [{x: 200, y: 200}];
+        let food = getRandomFoodPosition();
+        let dx = cellSize, dy = 0;
+        let piIndex = 1;
+        let applesEaten = 0;
+        let gameInterval;
+        let speed = 150;
+        let snakeColor = "#00ccff";
+
+        // Track the top 3 scores
+        let topScores = [0, 0, 0];
+
+        function getRandomFoodPosition() {
+            return {
+                x: Math.floor(Math.random() * (canvas.width / cellSize)) * cellSize,
+                y: Math.floor(Math.random() * (canvas.height / cellSize)) * cellSize
+            };
+        }
+
+        function drawSnake() {
+            snake.forEach((part, index) => {
+                ctx.fillStyle = snakeColor;
+                ctx.fillRect(part.x, part.y, cellSize, cellSize);
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "25px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(piDigits[index] || "", part.x + cellSize / 2, part.y + cellSize / 2);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "#ff4500";
+            ctx.font = "30px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("π", food.x + cellSize / 2, food.y + cellSize / 2);
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawFood();
+            updateSnake();
+            drawSnake();
+            scoreElement.textContent = applesEaten;
+        }
+
+        function updateSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height || checkCollision(head)) {
+                gameOver();
+                return;
+            }
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                food = getRandomFoodPosition();
+                piIndex++;
+                applesEaten++;
+            } else {
+                snake.pop();
+            }
+        }
+
+        function checkCollision(head) {
+            return snake.some((part, index) => index !== 0 && part.x === head.x && part.y === head.y);
+        }
+
+        function gameOver() {
+            clearInterval(gameInterval);
+            ctx.fillStyle = "white";
+            ctx.font = "30px Arial";
+            ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
+            updateTopScores();
+        }
+
+        function updateTopScores() {
+            topScores.push(applesEaten);
+            topScores.sort((a, b) => b - a);
+            topScores = topScores.slice(0, 3);
+            renderTopScores();
+        }
+
+        function renderTopScores() {
+            const rows = recordsTable.querySelectorAll('tr');
+            rows.forEach((row, index) => {
+                row.cells[1].textContent = topScores[index] || 0;
+            });
+        }
+
+        function moveUp() { if (dy === 0) { dx = 0; dy = -cellSize; } }
+        function moveDown() { if (dy === 0) { dx = 0; dy = cellSize; } }
+        function moveLeft() { if (dx === 0) { dx = -cellSize; dy = 0; } }
+        function moveRight() { if (dx === 0) { dx = cellSize; dy = 0; } }
+
+        function restartGame() {
+            snake = [{x: 200, y: 200}];
+            food = getRandomFoodPosition();
+            dx = cellSize;
+            dy = 0;
+            applesEaten = 0;
+            piIndex = 1;
+            speed = 150;
+            snakeColor = "#00ccff";
+            gameInterval = setInterval(update, speed);
+            scoreElement.textContent = applesEaten;
+        }
+
+        function changeDifficulty() {
+            speed = parseInt(document.getElementById('difficulty').value);
+            clearInterval(gameInterval);
+            gameInterval = setInterval(update, speed);
+        }
+
+        function changeSnakeColor(event) {
+            snakeColor = event.target.value;
+        }
+
+        gameInterval = setInterval(update, speed);
+
+        // Listen for keyboard arrow keys
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp" && dy === 0) {
+                dx = 0;
+                dy = -cellSize;
+            } else if (event.key === "ArrowDown" && dy === 0) {
+                dx = 0;
+                dy = cellSize;
+            } else if (event.key === "ArrowLeft" && dx === 0) {
+                dx = -cellSize;
+                dy = 0;
+            } else if (event.key === "ArrowRight" && dx === 0) {
+                dx = cellSize;
+                dy = 0;
+            }
+        });
+
+        // Prevent page scrolling on arrow key presses
+        window.addEventListener("keydown", (event) => {
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>
