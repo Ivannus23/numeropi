@@ -3,255 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usos de π en Ingeniería</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
-    <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+    <title>Día del Pi - Ingeniería Mecánica</title>
+    
+    <!-- Fuente Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Íconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- AOS Animaciones al hacer scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<!-- Carga de MathJax para renderizar fórmulas -->
+<script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  
+
+    <!-- Script JS -->
+    <script defer src="js/script.js"></script>
 </head>
 <body>
+    <button id="toggleSidebar" class="menu-btn show" aria-label="Menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
 
-    <!-- ENCABEZADO CON LOGOS Y TÍTULO -->
-    <header>
+
+    <!-- Barra lateral de navegación -->
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#intro"><i class="fas fa-circle-info"></i> Introducción</a></li>
+            <li><a href="#manufactura"><i class="fas fa-industry"></i> Manufactura</a></li>
+            <li><a href="#rotacion"><i class="fas fa-rotate"></i> Rotación</a></li>
+            <li><a href="#fluidos"><i class="fas fa-water"></i> Fluidos</a></li>
+            <li><a href="#mecanizado"><i class="fas fa-tools"></i> Mecanizado</a></li>
+            <li><a href="#calor"><i class="fas fa-temperature-high"></i> Transferencia</a></li>
+            <li><a href="#materiales"><i class="fas fa-cube"></i> Materiales</a></li>
+            <li><a href="#calculadora"><i class="fas fa-calculator"></i> Calculadora π</a></li>
+            <li><a href="#trivia"><i class="fas fa-question-circle"></i> Trivia</a></li>
+            <li><a href="juego.html" target="_blank"><i class="fas fa-gamepad"></i> Juego de Pi</a></li>
+            <li><a href="#footer"><i class="fas fa-users"></i> Participantes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Encabezado con logos -->
+    <header id="inicio">
         <div class="logos">
             <img src="recursos/logos/logo1.png" alt="Logo 1" class="logo">
             <img src="recursos/logos/logo2.png" alt="Logo 2" class="logo">
             <img src="recursos/logos/logo3.png" alt="Logo 3" class="logo">
             <img src="recursos/logos/logo4.png" alt="Logo 4" class="logo">
         </div>
-        <h1>USOS DE π EN LA INGENIERÍA</h1>
+        <h1>Día del Pi en la Ingeniería Mecánica</h1>
     </header>
 
-    <main>
-        <section>
-            <h2>Bienvenido</h2>
-            <p>Explora los diferentes usos del número π en la Ingeniería Mecánica.</p>
-        </section>
-    </main>
-
-
-    <!-- Secciones con tarjetas -->
-    <section id="intro">
-        <div class="card">
-            <h2>Introducción</h2>
-            <p>Explicación breve sobre la importancia de π en la ingeniería.</p>
-        </div>
+    <!-- Sección principal de bienvenida -->
+    <section class="hero" data-aos="fade-up">
+        <h2>Bienvenido</h2>
+        <p>Explora los increíbles usos del número π en la ingeniería mecánica</p>
+        <a href="#intro" class="btn">Descúbrelo</a>
     </section>
 
-    <section id="manufactura">
-        <div class="card">
-            <h2>Manufactura y Diseño Industrial</h2>
-            <p>Manufactura y diseño industrial: El numero π tiene aplicaciones clave en el diseño industrial y la manufactura, especial mente cuando se trabaja con geometrías circulares y cilíndricas</p>
-            <math>
-                <mi>A</mi>
-                <mo>=</mo>
-                <mi>π</mi>
-                <msup>
-                    <mi>r</mi>
-                    <mn>2</mn>
-                </msup>
-            </math>
-            ,
-            <math>
-                <mi>C</mi>
-                <mo>=</mo>
-                <mi>2</mi>
-                <mi>π</mi>
-                <mi>r</mi>
-            </math>
-            <P>Donde:</P>
-                <p>r: es el radio</p>
-                <p>A: es el área</p>
-                <p></p>C: es la circunferencia </P>
-        </div>
-    </section>
 
-    <section id="rotacion">
+    <!-- aqui van las tarjetas de las formulas-->
+    <section id="manufactura" data-aos="fade-up">
         <div class="card">
-            <h2>Velocidad Angular y Periodo de Rotación</h2>
-            <p>velocidad angular y periodo de rotacion:  π es fundamental cuando se trata de movimientos circulares o rotacionales. La velocidad angular es una medida de la rapidez con la que un objeto gira alrededor de un eje</p>
-            <math>
-                <mi>ω</mi>
-                <mo>=</mo>
-                <mfrac>
-                    <mn>2π</mn>
-                    <mi>T</mi>
-                </mfrac>
-            </math>
+          <h2>📐 Manufactura y Diseño Industrial</h2>
+          <p>
+            En manufactura y diseño industrial, el número π es fundamental al trabajar con elementos circulares y cilíndricos. Se utiliza en el diseño de componentes como engranajes, poleas, rodamientos, tubos y estructuras curvas. Determina medidas de superficies, perímetros, volúmenes y tolerancias dimensionales.
+          </p>
+          <p><strong>Fórmulas comunes:</strong></p>
+          <p>Área de un círculo: \( A = \pi r^2 \)</p>
+          <p>Perímetro o circunferencia: \( C = 2\pi r \)</p>
         </div>
-    </section>
-
-    <section id="fluidos">
+      </section>
+      
+      <section id="rotacion" data-aos="fade-up">
         <div class="card">
-            <h2>Mecánica de Fluidos</h2>
-            <p>Mecánica de fluidos: Para el flujo en un sistema de tuberías cilíndricas, la ecuación de Hagen-Poiseuille para el flujo laminar de un fluido viscoso</p>
-            <p>Ecuación de Hagen-Poiseuille</p>
-            <math display="block">
-                <mi>Q</mi>
-                <mo>=</mo>
-                <mfrac>
-                    <mrow>
-                        <mi>π</mi>
-                        <msup>
-                            <mi>r</mi>
-                            <mn>4</mn>
-                        </msup>
-                        <mo>(</mo>
-                        <msub>
-                            <mi>P</mi>
-                            <mn>1</mn>
-                        </msub>
-                        <mo>-</mo>
-                        <msub>
-                            <mi>P</mi>
-                            <mn>2</mn>
-                        </msub>
-                        <mo>)</mo>
-                    </mrow>
-                    <mrow>
-                        <mn>8</mn>
-                        <mi>μ</mi>
-                        <mi>L</mi>
-                    </mrow>
-                </mfrac>
-            </math>
+          <h2>🔄 Velocidad Angular y Movimiento Circular</h2>
+          <p>
+            En sistemas mecánicos rotacionales, π se emplea para calcular velocidad angular y periodos de rotación. Estos conceptos se aplican en motores, turbinas, sistemas de transmisión y mecanismos giratorios en general.
+          </p>
+          <p><strong>Fórmula de velocidad angular:</strong></p>
+          <p>\( \omega = \dfrac{2\pi}{T} \)</p>
+          <p>Donde:<br>
+          \( \omega \): velocidad angular [rad/s]<br>
+          \( T \): periodo de rotación [s]</p>
+        </div>
+      </section>
+
+      <section id="fluidos" data-aos="fade-up">
+        <div class="card">
+          <h2>💧 Mecánica de Fluidos</h2>
+          <p>
+            En el estudio del flujo de fluidos en sistemas circulares (como tuberías), π aparece en la ecuación de Hagen-Poiseuille, que permite calcular el caudal en flujos laminares.
+          </p>
+          <p><strong>Ecuación de flujo laminar:</strong></p>
+          <p>
+            \( Q = \dfrac{\pi r^4 (P_1 - P_2)}{8 \mu L} \)
+          </p>
+          <p>Donde:<br>
+          \( Q \): caudal volumétrico [m³/s]<br>
+          \( r \): radio de la tubería [m]<br>
+          \( P_1 - P_2 \): diferencia de presiones [Pa]<br>
+          \( \mu \): viscosidad dinámica [Pa·s]<br>
+          \( L \): longitud de la tubería [m]</p>
+        </div>
+      </section>
+
+      <section id="mecanizado" data-aos="fade-up">
+        <div class="card">
+          <h2>⚙️ Corte y Mecanizado</h2>
+          <p>
+            En procesos como el torneado y fresado, π permite calcular la velocidad de corte para piezas cilíndricas. Esta velocidad es clave para la eficiencia del proceso y la calidad del producto final.
+          </p>
+          <p><strong>Velocidad de corte:</strong></p>
+          <p>\( V = \pi D N \)</p>
+          <p>Donde:<br>
+          \( V \): velocidad de corte [mm/min o m/min]<br>
+          \( D \): diámetro de la pieza [mm o m]<br>
+          \( N \): número de revoluciones por minuto (RPM)</p>
+        </div>
+      </section>
+      
+
+      <section id="calor" data-aos="fade-up">
+        <div class="card">
+          <h2>🔥 Transferencia de Calor</h2>
+          <p>
+            En transferencia térmica a través de cuerpos cilíndricos (tuberías, intercambiadores), π se utiliza para calcular el flujo de calor a través del área lateral del cilindro.
+          </p>
+          <p><strong>Ecuación de conducción en cilindros:</strong></p>
+          <p>
+            \( q = \dfrac{2 \pi k L (T_1 - T_2)}{\ln(r_2 / r_1)} \)
+          </p>
+          <p>Donde:<br>
+          \( q \): flujo térmico [W]<br>
+          \( k \): conductividad térmica [W/m·K]<br>
+          \( L \): longitud del cilindro [m]<br>
+          \( T_1, T_2 \): temperaturas interna y externa [°C]<br>
+          \( r_1, r_2 \): radios interno y externo del cilindro [m]</p>
+        </div>
+      </section>
+      
+      <section id="materiales" data-aos="fade-up">
+        <div class="card">
+          <h2>🧱 Resistencia de Materiales</h2>
+          <p>
+            En análisis estructural, π es esencial para determinar esfuerzos en elementos como ejes, vigas o columnas bajo torsión. El módulo polar de un cilindro depende directamente del valor de π.
+          </p>
+          <p><strong>Fórmula de esfuerzo cortante:</strong></p>
+          <p>\( \tau = \dfrac{T r}{J} \)</p>
+          <p><strong>Módulo polar de resistencia para eje circular:</strong></p>
+          <p>\( J = \dfrac{\pi D^4}{32} \)</p>
+          <p>Donde:<br>
+          \( \tau \): esfuerzo cortante [Pa]<br>
+          \( T \): torque aplicado [Nm]<br>
+          \( r \): radio del eje [m]<br>
+          \( J \): módulo polar de resistencia [m⁴]</p>
+        </div>
+      </section>
+      
+      
+      
+      
+      
+
+    <!-- Aquí continuaré con las tarjetas mejoradas, la calculadora, trivia, footer y botón regresar arriba -->
+    <section id="calculadora" data-aos="fade-up">
+        <h2><i class="fas fa-calculator"></i> Calculadora de Área y Perímetro</h2>
+        <p>Ingresa el radio y calcula el área y perímetro de un círculo usando π.</p>
+        
+        <div class="card">
+            <label for="radioInput">Radio:</label>
+            <input type="number" id="radioInput" placeholder="Ej. 5" min="0" step="any" oninput="calcularAreaYPerimetro()" style="padding:8px; border-radius:10px; border:none; width:150px; text-align:center; font-family: Orbitron;">
             
+            <div id="resultadoArea" style="margin-top:15px; font-weight:bold;"></div>
+            <div id="resultadoPerimetro" style="margin-top:10px; font-weight:bold;"></div>
         </div>
     </section>
-
-    <section id="mecanizado">
+    <section id="trivia" data-aos="fade-up">
+        <h2><i class="fas fa-question-circle"></i> Trivia del Día del Pi</h2>
+        <p>¿Cuánto sabes sobre el número π? Elige la respuesta correcta y compruébalo al instante.</p>
+    
         <div class="card">
-            <h2>Procesos de Corte y Mecanizado</h2>
-            <p>Procesos de corte y mecanizado de piezas circulares: En procesos mecanizados, como el torneado o fresado de piezas cilíndricas, se utiliza el π​ para determinar distancias de avance, las velocidades de corte y los tiempos de ciclo</p>
-            <math>
-                <mi>V</mi>
-                <mo>=</mo>
-                <mi>π</mi>
-                <mi>D</mi>
-                <mi>N</mi>
-            </math>
+            <h3>1️⃣ ¿Cuál es el valor aproximado de π?</h3>
+            <label><input type="radio" name="pregunta1" value="3.1416"> 3.1416</label><br>
+            <label><input type="radio" name="pregunta1" value="2.7182"> 2.7182</label><br>
+            <label><input type="radio" name="pregunta1" value="1.6180"> 1.6180</label><br>
+            <button onclick="verificarRespuesta('pregunta1', '3.1416')">Comprobar</button>
+            <div id="feedback-pregunta1" class="feedback"></div>
         </div>
-    </section>
-
-    <section id="calor">
+    
         <div class="card">
-            <h2>Transferencia de Calor</h2>
-            <p>transferencia de calor: En el calculo de transferencia de calor en superficies circulares o cuerpos cilindricos, se requiere π para saber el area o volumen del cuerpo</p>
-            <math display="block">
-                <mi>q</mi>
-                <mo>=</mo>
-                <mfrac>
-                    <mrow>
-                        <mn>2</mn>
-                        <mi>π</mi>
-                        <mi>k</mi>
-                        <mi>L</mi>
-                        <mo>(</mo>
-                        <msub>
-                            <mi>T</mi>
-                            <mn>1</mn>
-                        </msub>
-                        <mo>-</mo>
-                        <msub>
-                            <mi>T</mi>
-                            <mn>2</mn>
-                        </msub>
-                        <mo>)</mo>
-                    </mrow>
-                    <mrow>
-                        <mi>ln</mi>
-                        <mo>(</mo>
-                        <mfrac>
-                            <msub>
-                                <mi>r</mi>
-                                <mn>2</mn>
-                            </msub>
-                            <msub>
-                                <mi>r</mi>
-                                <mn>1</mn>
-                            </msub>
-                        </mfrac>
-                        <mo>)</mo>
-                    </mrow>
-                </mfrac>
-            </math>
-            
-            
+            <h3>2️⃣ ¿Qué representa el número π en matemáticas?</h3>
+            <label><input type="radio" name="pregunta2" value="Relación entre radio y área"> Relación entre radio y área</label><br>
+            <label><input type="radio" name="pregunta2" value="Relación entre diámetro y circunferencia"> Relación entre diámetro y circunferencia</label><br>
+            <label><input type="radio" name="pregunta2" value="Número de lados de un triángulo"> Número de lados de un triángulo</label><br>
+            <button onclick="verificarRespuesta('pregunta2', 'Relación entre diámetro y circunferencia')">Comprobar</button>
+            <div id="feedback-pregunta2" class="feedback"></div>
         </div>
-    </section>
-
-    <section id="materiales">
+    
         <div class="card">
-            <h2>Resistencia de Materiales</h2>
-            <p>resistencia de materiales: π se usa para calcular esfuerzos, deformaciones y resistencia en estructuras como vigas, columnas y ejes, siendo clave en el diseño seguro de materiales.</p>
-            <math>
-                <mi>τ</mi>
-                <mo>=</mo>
-                <mfrac>
-                    <mrow>
-                        <mi>T</mi>
-                        <mi>r</mi>
-                    </mrow>
-                    <mi>J</mi>
-                </mfrac>
-            </math>
-            
-            <math>
-                <mi>J</mi>
-                <mo>=</mo>
-                <mfrac>
-                    <mrow>
-                        <mi>π</mi>
-                        <msup>
-                            <mi>D</mi>
-                            <mn>4</mn>
-                        </msup>
-                    </mrow>
-                    <mn>32</mn>
-                </mfrac>
-            </math>
-            
+            <h3>3️⃣ ¿Qué tipo de número es π?</h3>
+            <label><input type="radio" name="pregunta3" value="Entero"> Entero</label><br>
+            <label><input type="radio" name="pregunta3" value="Racional"> Racional</label><br>
+            <label><input type="radio" name="pregunta3" value="Irracional"> Irracional</label><br>
+            <button onclick="verificarRespuesta('pregunta3', 'Irracional')">Comprobar</button>
+            <div id="feedback-pregunta3" class="feedback"></div>
         </div>
     </section>
-
-    <!-- Juego de la serpiente -->
-    <section id="juego">
-        <h2>Juego del Día de Pi</h2>
-        <canvas id="gameCanvas"></canvas>
-        <div class="controls">
-            <button onclick="changeDirection('up')">▲</button>
-            <div>
-                <button onclick="changeDirection('left')">◀</button>
-                <button onclick="changeDirection('right')">▶</button>
-            </div>
-            <button onclick="changeDirection('down')">▼</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>Proyecto: <strong>USOS DE π EN LA INGENIERIA MECANICA</strong></p>
-        <p>Participantes: <strong><p>Coordinador:</p><ul>
-                <li>Jara Ulloa Francisco Javier</li>
-            </ul></p>
-            <p>Estudiantes:</p>
-            <ul>
-           <li>Maria Fernada Esparza Moya</li>
+    
+    <footer id="footer">
+        <div class="card">
+          <h2>📚 Coordinador</h2>
+          <p>Dr. Francisco Javier Jara Ulloa</p>
+      
+          <h2>🎓 Estudiantes</h2>
+          <ul style="list-style: none; padding: 0;">
+            <li>María Fernanda Esparza Moya</li>
             <li>Alan Arnulfo Jaimes Cortez</li>
             <li>Luis Alberto Mora Peña</li>
-            <li>Eduardo Miguel Arreola Marquez</li>
-            <li>Jorge Manuel Simon Cortes</li>
-            <li>Javier Sierra Martinez</li>
-            <li>Paul Osmar Zamora Medoza</li>
-            <li>Robles Enriquez Jostyn Jesus</li>
-           <li>Gómez Ayón Kevin Fernando</li>
-            <li>Ramirez Robles David Iván</li>
-            <li>Mohedano Peña Guillermo Axel</li>
-        </ul>
-        </strong></p>
-        <p>Cuerpo Académico: <strong>Unidad de ciencias basicas e ingenierias</strong></p>
-    </footer>
+            <li>Eduardo Miguel Arreola Márquez</li>
+            <li>Jorge Manuel Simón Cortes</li>
+            <li>Javier Sierra Martínez</li>
+            <li>Karla Natalia Jara Alvarez</li>
+            <li>Paul Osmar Zamora Mendoza</li>
+            <li>Jostyn Jesús Robles Enriquez</li>
+            <li>Kevin Fernando Gómez Ayón</li>
+            <li>David Iván Ramírez Robles</li>
+            <li>Guillermo Axel Mohedano Peña</li>
+          </ul>
+      
+          <h2>📑 Proyecto</h2>
+          <p><strong>SIP24-097:</strong> Uso de TICs, redes sociales e inteligencia artificial (IA) en educación superior.</p>
+          <p><strong>PROGRAMA ACADÉMICO DE INGENIERÍA MECÁNICA</strong></p>
+          <p>UNIDAD ACADÉMICA DE CIENCIAS BÁSICAS E INGENIERÍAS (UACBI)</p>
+      
 
+<script>
+    AOS.init(); // Inicializa las animaciones
+</script>
 </body>
 </html>

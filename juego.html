@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juego del Día de Pi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #00264d;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      text-align: center;
+    }
+    #gameContainer {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #startScreen {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    canvas {
+      background-color: #003d66;
+      border: 3px solid white;
+    }
+    #score {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    .btn {
+      background: #ffcc00;
+      color: #00264d;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    .btn:hover {
+      background: white;
+      color: black;
+    }
+    #controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #gameOverMsg {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    select {
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 15px;
+      font-family: Orbitron;
+    }
+    @media(max-width: 600px) {
+      canvas {
+        width: 90vw;
+        height: 90vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="startScreen">
+    <h1>🐍 Juego del Día del Pi</h1>
+    <label for="difficulty">Dificultad:</label>
+    <select id="difficulty">
+      <option value="200">Fácil</option>
+      <option value="150" selected>Normal</option>
+      <option value="100">Difícil</option>
+      <option value="70">Extrema</option>
+    </select>
+    <button class="btn" onclick="startGame()">🎮 Iniciar Juego</button>
+    <button class="btn" onclick="location.href='index.html'">↩ Volver al sitio principal</button>
+  </div>
+
+  <div id="gameContainer">
+    <div id="score">Puntuación: 0</div>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <div id="gameOverMsg"></div>
+    <div id="controls">
+      <button class="btn" onclick="toggleSound()">🔊 Sonido</button>
+      <button class="btn" onclick="restartGame()">🔁 Reiniciar</button>
+      <button class="btn" onclick="location.href='index.html'">↩ Volver</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let box = 20;
+    let snake = [{ x: 5, y: 5 }];
+    let food = { x: 10, y: 10 };
+    let direction = 'RIGHT';
+    let score = 0;
+    let gameInterval;
+    let soundEnabled = true;
+    const eatSound = new Audio('https://www.myinstants.com/media/sounds/pop-cat.mp3');
+    let piDigits = "14159265358979323846264338327950288419716939937510";
+    let piIndex = 0;
+    let speed = 150;
+
+    function drawGame() {
+      ctx.fillStyle = "#003d66";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Dibujar cuerpo de serpiente con dígitos de Pi y borde
+      snake.forEach((segment, index) => {
+        ctx.fillStyle = "#00ccff";
+        ctx.fillRect(segment.x * box, segment.y * box, box, box);
+
+        // Borde del segmento
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(segment.x * box, segment.y * box, box, box);
+
+        // Mostrar dígito correspondiente
+        let digit = index === 0 ? "3" : piDigits[index - 1] || "";
+        ctx.fillStyle = "#00264d";
+        ctx.font = "16px Orbitron";
+        ctx.fillText(digit, segment.x * box + 6, segment.y * box + 16);
+      });
+
+      // Dibujar comida
+      ctx.fillStyle = "#ffcc00";
+      ctx.font = "18px Orbitron";
+      ctx.fillText("π", food.x * box + 5, food.y * box + 15);
+    }
+
+    function updateGame() {
+      let head = { ...snake[0] };
+
+      if (direction === 'LEFT') head.x--;
+      if (direction === 'RIGHT') head.x++;
+      if (direction === 'UP') head.y--;
+      if (direction === 'DOWN') head.y++;
+
+      if (
+        head.x < 0 || head.x * box >= canvas.width ||
+        head.y < 0 || head.y * box >= canvas.height ||
+        snake.some(seg => seg.x === head.x && seg.y === head.y)
+      ) {
+        clearInterval(gameInterval);
+        document.getElementById('gameOverMsg').innerHTML = `☠️ Game Over | Puntuación final: ${score}`;
+        return;
+      }
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById("score").innerText = `Puntuación: ${score}`;
+        if (soundEnabled) eatSound.play();
+        if (piIndex < piDigits.length) piIndex++;
+        food = {
+          x: Math.floor(Math.random() * (canvas.width / box)),
+          y: Math.floor(Math.random() * (canvas.height / box))
+        };
+      } else {
+        snake.pop();
+      }
+
+      snake.unshift(head);
+      drawGame();
+    }
+
+    function startGame() {
+      speed = parseInt(document.getElementById("difficulty").value);
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("gameContainer").style.display = "flex";
+      snake = [{ x: 5, y: 5 }];
+      direction = 'RIGHT';
+      score = 0;
+      piIndex = 0;
+      document.getElementById("score").innerText = "Puntuación: 0";
+      document.getElementById("gameOverMsg").innerText = "";
+      food = { x: 10, y: 10 };
+      clearInterval(gameInterval);
+      gameInterval = setInterval(updateGame, speed);
+    }
+
+    function restartGame() {
+      clearInterval(gameInterval);
+      piIndex = 0;
+      startGame();
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      alert(`Sonido ${soundEnabled ? 'activado' : 'desactivado'}`);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+      if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+      if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+      if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+    });
+
+    let xDown = null, yDown = null;
+    canvas.addEventListener('touchstart', (e) => {
+      const firstTouch = e.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (!xDown || !yDown) return;
+      const xUp = e.touches[0].clientX;
+      const yUp = e.touches[0].clientY;
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0 && direction !== "RIGHT") direction = "LEFT";
+        else if (xDiff < 0 && direction !== "LEFT") direction = "RIGHT";
+      } else {
+        if (yDiff > 0 && direction !== "DOWN") direction = "UP";
+        else if (yDiff < 0 && direction !== "UP") direction = "DOWN";
+      }
+      xDown = null;
+      yDown = null;
+    });
+  </script>
+</body>
+</html>

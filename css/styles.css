@@ -1,0 +1,276 @@
+/* Fuente principal */
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(180deg, #002b5c, #005ea8);
+    color: white;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+/* Encabezado con logos */
+header {
+    background: linear-gradient(to right, #00264d, #004080);
+    text-align: center;
+    padding: 20px 10px;
+    color: white;
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+}
+
+/* Hero Section */
+.hero {
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: white;
+    color: #00264d;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* Tarjetas */
+.card {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    max-width: 800px;
+    margin: 20px auto;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Secciones */
+section {
+    padding: 50px 20px;
+}
+
+/* Barra lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background: rgba(0, 38, 77, 0.95);
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.4);
+    z-index: 999;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.sidebar ul a:hover {
+    color: #ffcc00;
+}
+
+/* Espaciado lateral del contenido para no taparlo con la sidebar */
+body {
+    margin-left: 220px;
+}
+
+/* Footer */
+footer {
+    background-color: #001F3F;
+    padding: 30px 20px;
+    text-align: center;
+    color: white;
+}
+
+/* Botón regresar arriba */
+#btn-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #ffcc00;
+    color: #00264d;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+#btn-arriba:hover {
+    background: #ffffff;
+    color: #000;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    body {
+        margin-left: 180px;
+    }
+
+    .logo {
+        width: 60px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 500px) {
+    .sidebar {
+        position: fixed;
+        width: 100px;
+        padding: 10px;
+    }
+
+    body {
+        margin-left: 100px;
+    }
+
+    .sidebar ul a {
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    #btn-arriba {
+        font-size: 16px;
+        padding: 10px 14px;
+    }
+}
+
+/* Botón hamburguesa elegante */
+.menu-btn {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ffcc00;
+    padding: 10px;
+    border-radius: 0 10px 10px 0;
+    z-index: 1001;
+    cursor: pointer;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.menu-btn:hover {
+    background: #ffcc00;
+}
+
+.menu-btn.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.9);
+}
+
+.menu-btn.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) scale(1);
+}
+
+/* Líneas del icono hamburguesa */
+.menu-btn .bar {
+    width: 22px;
+    height: 3px;
+    background-color: #ffcc00;
+    border-radius: 2px;
+    transition: background 0.3s ease;
+}
+
+.menu-btn:hover .bar {
+    background-color: #00264d;
+}
+
+@media (max-width: 768px) {
+    .menu-btn {
+        display: flex;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    body {
+        margin-left: 0 !important;
+    }
+}
+
